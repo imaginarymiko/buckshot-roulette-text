@@ -8,6 +8,10 @@ void Player::setOpponent(Player* op) {
 }
 
 // Methods
+int Player::getHealth() {
+    return health;
+}
+
 void Player::getNewItems() {
     int itemsPickedUp = 0;
     std::random_device rd;

@@ -25,6 +25,7 @@ class Player {
     void setOpponent(Player* opponent);
 
     // Methods
+    int getHealth();
     void getNewItems();
 
     // Items

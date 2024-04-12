@@ -21,6 +21,7 @@ int main(int argc, char** argv) {
     bool debug = false; // Allows access to debug commands and disables time delays.
     bool twoPlayer = false; // Disables the AI-controlled player.
     bool endless = false;
+    bool p1Turn = false;
     std::string name1;
     std::string name2;
     unsigned long score = 0;
@@ -134,6 +135,11 @@ int main(int argc, char** argv) {
         Player p1 = Player {1, name1, nullptr, &s};
         Player p2 = Player {2, name2, &p1, &s};
         p1.setOpponent(&p2);
+        do {
+            while (p1.getHealth() > 0 && p2.getHealth() > 0) {
+                
+            }
+        } while (endless);
     } catch (std::runtime_error& e) {
         std::cerr << "Runtime error: " << e.what() << std::endl;
         return 1;
