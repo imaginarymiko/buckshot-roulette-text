@@ -1,5 +1,3 @@
-#pragma once
-
 #include <chrono>
 #include <stdexcept>
 
@@ -15,6 +13,10 @@ void printGame(const Player& p1, const Player& p2, const Shotgun& s) {
     
 }
 
+void displayCredits() {
+    std::cout << std::endl;
+}
+
 int main(int argc, char** argv) {
     std::vector<std::string> validOptions = {"-h", "-help", "-s", "-singleplayer", "-t", "-twoplayer", "-d", "-debug"};
     std::string input;
@@ -25,6 +27,7 @@ int main(int argc, char** argv) {
     std::string name1;
     std::string name2;
     unsigned long score = 0;
+    unsigned int round = 1;
     Shotgun s {};
     try {
         if (argc == 1) {
@@ -63,6 +66,7 @@ int main(int argc, char** argv) {
         } else {
             InputParser ip(argc, argv, validOptions);
             if (ip.optionExists("-h") || ip.optionExists("-help")) {
+                displayCredits();
                 printHelp();
                 return 0;
             }
@@ -137,9 +141,13 @@ int main(int argc, char** argv) {
         p1.setOpponent(&p2);
         do {
             while (p1.getHealth() > 0 && p2.getHealth() > 0) {
-                
+                std::cout << "Game start" << std::endl;
             }
-        } while (endless);
+            if (twoPlayer) {
+                std::cout << "Congratulations Player " << ((p1.getHealth() > 0) ? 1 : 2) << ", you win!" << std::endl;
+                break;
+            }
+        } while ((round <= 3) && endless);
     } catch (std::runtime_error& e) {
         std::cerr << "Runtime error: " << e.what() << std::endl;
         return 1;
@@ -153,5 +161,6 @@ int main(int argc, char** argv) {
         std::cerr << "Unknown error" << std::endl;
         return -1;
     }
+    displayCredits();
     return 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include <stdexcept>
 #include <tuple>
 
 #include "shotgun.hh"
@@ -21,12 +22,20 @@ class Player {
     Shotgun* s;
   public:
     Player(int player, std::string& name, Player* opponent, Shotgun* s);
+    Player(int player, std::string& name, int health, Player* opponent, Shotgun* s);
     ~Player();
     void setOpponent(Player* opponent);
 
     // Methods
     int getHealth();
+    void setHealth(int he);
     void getNewItems();
+    void damageSelf(int damage);
+    bool shootOpponent();
+    bool shootSelf();
+    bool skipStatus();
+    void skipNextTurn();
+    void unskipNextTurn();
 
     // Items
     bool itemExists(Items item);

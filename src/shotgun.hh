@@ -8,18 +8,24 @@ class Shotgun {
   private:
     int damage = 1;
     bool sawedOff = false;
-    std::vector<bool> bullets;
+    std::vector<bool> shells;
   public:
     Shotgun();
     ~Shotgun();
 
     // Methods
-    std::vector<bool> generateBullets(size_t live, size_t blank);
-    void shuffleBullets();
+    int getDamage();
+    std::vector<bool> getShells();
+    int getShellAmount();
+    bool getIthShell(int i);
+    std::vector<bool> generateShells(size_t live, size_t blank);
+    void shuffleShells();
     bool getChamber();
     void popChamber();
+    void invertChamber();
     void sawShotgun();
     void unsawShotgun();
+    bool sawedStatus();
 
 
     // Debug
