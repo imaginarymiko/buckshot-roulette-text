@@ -12,8 +12,13 @@ void Player::setOpponent(Player* op) {
     opponent = op;
 }
 
+// Virtual Methods
+void Player::notify(const Event& e) {
+    return;
+}
+
 // Methods
-int Player::getHealth() {
+int Player::getHealth() const {
     return health;
 }
 
@@ -107,7 +112,7 @@ void Player::unskipNextTurn() {
 }
 
 // Items
-bool Player::itemExists(Items item) {
+bool Player::itemExists(Items item) const {
     return std::find(items.begin(), items.end(), item) != items.end();
 }
 
@@ -182,9 +187,9 @@ bool Player::useInverter() {
     }
 }
 
-bool Player::useAdrenaline() {
+bool Player::useAdrenaline(int item) {
     // Allows the user to steal an item of the opponent's, consuming it immediately.
-    //! To-do: Implement
+    if ()
 }
 
 bool Player::useExpiredMedicine() {
@@ -196,11 +201,10 @@ bool Player::useExpiredMedicine() {
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 99);
         int randomNumber = dis(gen);
-        if (randomNumber < 40) {
+        if (randomNumber < 40)
             health += 2;
-        } else {
+        else
             health -= 1;
-        }
         return true;
     }
 }

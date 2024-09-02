@@ -5,13 +5,14 @@
 #include <tuple>
 
 #include "shotgun.hh"
+#include "subject.hh"
 
 const int DRAW_ITEMS = 4;
-const int MAX_ITEMS = 8;
+const int MAX_ITEMS = 8; 
 
 enum class Items { Magnifying_Glass, Cigarette_Pack, Beer_Can, Saw, Handcuffs, Burner_Phone, Inverter, Adrenaline, Expired_Medicine };
 
-class Player {
+class Player: public Observer, public Subject {
   private:
     unsigned int player;
     std::string name;
@@ -26,8 +27,11 @@ class Player {
     ~Player();
     void setOpponent(Player* opponent);
 
+    // Virtual Methods
+    void notify(const Event& e) override;
+
     // Methods
-    int getHealth();
+    int getHealth() const;
     void setHealth(int he);
     void getNewItems();
     void damageSelf(int damage);
@@ -38,7 +42,7 @@ class Player {
     void unskipNextTurn();
 
     // Items
-    bool itemExists(Items item);
+    bool itemExists(Items item) const;
     int useMagnifyingGlass();
     bool useCigarettePack();
     bool useBeerCan();
@@ -46,6 +50,6 @@ class Player {
     bool useHandcuffs();
     std::tuple<int, bool> useBurnerPhone();
     bool useInverter();
-    bool useAdrenaline();
+    bool useAdrenaline(int item);
     bool useExpiredMedicine();
 };

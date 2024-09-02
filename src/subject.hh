@@ -10,7 +10,7 @@ class Subject {
   public:
     Subject();
     virtual ~Subject() = 0;
-    void attach(Observer* o);
-    void detach(Observer* o);
-    void notifyAllObservers(Event e) const;
+    void attach(Observer& o);
+    void detach(Observer& o);
+    void notifyAllObservers(const Event& e) const;
 };

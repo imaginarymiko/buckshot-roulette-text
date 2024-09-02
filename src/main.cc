@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
                 }
             }
         } else if (argc > 3) {
-            throw std::invalid_argument("Too many arguments");
+            throw std::invalid_argument("Too many arguments. Argument count: " + argc);
         } else {
             InputParser ip(argc, argv, validOptions);
             if (ip.optionExists("-h") || ip.optionExists("-help")) {
@@ -81,25 +81,28 @@ int main(int argc, char** argv) {
         }
         if (twoPlayer) {
             // Get names
-            std::cout << "Player 1, enter your name: " << std::endl;
+            std::cout << "PLAYER 1, SIGN THE WAIVER: " << std::endl;
             while (true) {
                 std::getline(std::cin, name1);
-                if (input == "God" || input == "Dealer") {
-                    std::cout << "Error: invalid name." << std::endl;
-                    continue;
-                } else {
-                    name1 = input;
+                std::string name1lower = name1;
+                std::transform(name1lower.begin(), name1lower.end(), name1lower.begin(),
+                               [](unsigned char c) -> unsigned char { return std::tolower(c); });
+                if (name1lower == "dealer" || name1lower == "god" || name1lower == "satan")
+                    std::cout << "INVALID NAME." << std::endl;
+                else
                     break;
-                }
             }
-            std::cout << "Player 2, enter your name: " << std::endl;
+            std::cout << "PLAYER 2, SIGN THE WAIVER: " << std::endl;
             while (true) {
                 std::getline(std::cin, name2);
-                if (input == "God" || input == "Dealer") {
-                    std::cout << "Error: invalid name." << std::endl;
+                std::string name2lower = name2;
+                std::transform(name2lower.begin(), name2lower.end(), name2lower.begin(),
+                               [](unsigned char c) -> unsigned char { return std::tolower(c); });
+                if (name2lower == "dealer" || name2lower == "god" || name2lower == "satan") {
+                    std::cout << "INVALID NAME." << std::endl;
                     continue;
                 } else if (input == name1) {
-                    std::cout << "Error: same name as Player 1." << std::endl;
+                    std::cout << "INVALID NAME: SAME NAME AS PLAYER 1." << std::endl;
                     continue;
                 } else {
                     name2 = input;
@@ -107,7 +110,7 @@ int main(int argc, char** argv) {
                 }
             }
         } else {
-            std::cout << "Will you take the pills (activates endless mode)? (Y/N)" << std::endl;
+            std::cout << "Consume pills (activates endless mode - not recommended for first playthrough)? (Y/N)" << std::endl;
             while (true) {
                 std::cin >> input;
                 toLowercase(input);
@@ -123,11 +126,11 @@ int main(int argc, char** argv) {
                 }
             }
             // Get name
-            std::cout << "Please sign the waiver." << std::endl;
+            std::cout << "PLEASE SIGN THE WAIVER." << std::endl;
             while (true) {
                 std::getline(std::cin, name1);
-                if (input == "God" || input == "Dealer") {
-                    std::cout << "Error: invalid name." << std::endl;
+                if (input == "god" || input == "dealer" || input == "satan") {
+                    std::cout << "INVALID NAME." << std::endl;
                     continue;
                 } else {
                     name1 = input;
@@ -140,19 +143,22 @@ int main(int argc, char** argv) {
         Player p2 = Player {2, name2, &p1, &s};
         p1.setOpponent(&p2);
         do {
+            std::cout << "Game start" << std::endl;
             while (p1.getHealth() > 0 && p2.getHealth() > 0) {
-                std::cout << "Game start" << std::endl;
+                std::cout << "Receive 4 items" << std::endl;
+                p1.getNewItems();
+                p2.getNewItems();
             }
             if (twoPlayer) {
                 std::cout << "Congratulations Player " << ((p1.getHealth() > 0) ? 1 : 2) << ", you win!" << std::endl;
                 break;
             }
         } while ((round <= 3) && endless);
-    } catch (std::runtime_error& e) {
-        std::cerr << "Runtime error: " << e.what() << std::endl;
-        return 1;
     } catch (std::overflow_error& e) {
         std::cerr << "Overflow error: " << e.what() << std::endl;
+        return 1;
+    } catch (std::runtime_error& e) {
+        std::cerr << "Runtime error: " << e.what() << std::endl;
         return 2;
     } catch (std::invalid_argument& e) {
         std::cerr << "Invalid argument: " << e.what() << std::endl;

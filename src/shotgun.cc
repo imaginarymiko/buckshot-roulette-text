@@ -6,19 +6,19 @@ Shotgun::Shotgun():
 Shotgun::~Shotgun() {}
 
 // Methods
-int Shotgun::getDamage() {
+int Shotgun::getDamage() const {
     return damage;
 }
 
-std::vector<bool> Shotgun::getShells() {
+std::vector<bool> Shotgun::getShells() const {
     return shells;
 }
 
-int Shotgun::getShellAmount() {
+int Shotgun::getShellAmount() const {
     return shells.size();
 }
 
-bool Shotgun::getIthShell(int i) {
+bool Shotgun::getIthShell(int i) const {
     return shells[i];
 }
 
@@ -44,7 +44,7 @@ void Shotgun::shuffleShells() {
     std::shuffle(shells.begin(), shells.end(), gen);
 }
 
-bool Shotgun::getChamber() {
+bool Shotgun::getChamber() const {
     // Returns the shell currently in the chamber.
     if (shells.empty()) throw std::runtime_error("Error: No shells in chamber");
     return shells.front();
@@ -68,7 +68,7 @@ void Shotgun::unsawShotgun() {
     sawedOff = false;
 }
 
-bool Shotgun::sawedStatus() {
+bool Shotgun::sawedStatus() const {
     return sawedOff;
 }
 

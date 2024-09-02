@@ -14,18 +14,18 @@ class Shotgun {
     ~Shotgun();
 
     // Methods
-    int getDamage();
-    std::vector<bool> getShells();
-    int getShellAmount();
-    bool getIthShell(int i);
+    int getDamage() const;
+    std::vector<bool> getShells() const;
+    int getShellAmount() const;
+    bool getIthShell(int i) const;
     std::vector<bool> generateShells(size_t live, size_t blank);
     void shuffleShells();
-    bool getChamber();
+    bool getChamber() const;
     void popChamber();
     void invertChamber();
     void sawShotgun();
     void unsawShotgun();
-    bool sawedStatus();
+    bool sawedStatus() const;
 
 
     // Debug
